@@ -37,7 +37,7 @@ def main():
                 obs, info = test_env.reset()
 
     except KeyboardInterrupt:
-        print("\nSimulazione interrotta dall'utente.")
+        print("\nSimulation interupted by user.")
     finally:
         test_env.close()
 
