@@ -1,0 +1,38 @@
+System requirements:
+- Python 3.10 or greater
+- Operating system: Windows 10/11
+
+1. Clone repository
+
+    git clone https://github.com/kushalgollen/Double-Inverted-Pendulum-Deep-RL-vs.-LQR-Control.git
+    cd Double-Inverted-Pendulum-Deep-RL-vs.-LQR-Control
+
+2. Create virtual env
+
+Option A:
+    python -m venv gym_env
+
+Option B if u have 'uv':
+    uv venv gym_env
+
+Activating virtual env:
+- On Windows (PowerShell):
+    .\gym_env\Scripts\Activate.ps1
+
+3. Install dependencies
+
+standard:
+    pip install -r requirements.txt
+
+with 'uv':
+    uv pip install -r requirements.txt
+
+4. Verify and Run Scripts
+
+Verify and run the comparative benchmark:
+
+    python benchmark.py
+
+To launch simple simulation with random impusle:
+
+    python simple_sim.py
