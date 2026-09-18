@@ -26,15 +26,6 @@ While Deep Reinforcement Learning (DRL) can discover stabilization strategies pu
 
 ---
 
-## Key Highlights
-
-* **Direct MuJoCo Linearization:** Derives the continuous Jacobian matrices $(A_c, B_c)$ numerically using MuJoCo's C API (`mujoco.mjd_transitionFD`), avoiding inaccurate manual Lagrangian derivations.
-* **`frame_skip` Synchronization:** Matches the discrete Riccati equation (DARE) to the true sample time of the environment ($\Delta t = 0.05\text{ s}$, $20\text{ Hz}$), preventing the phase lag that causes limit-cycle oscillations.
-* **Trained PPO Baselines:** Includes both single-environment and parallel vectorized (`SubprocVecEnv`) training pipelines using `Stable-Baselines3`.
-* **Rigorous Testing:** 50 Monte Carlo evaluation runs per controller testing survival rate, state tracking error (ISE), and control effort ($u^2$) under both nominal conditions and external velocity kicks.
-
----
-
 ## Benchmark Results
 
 Here is how both controllers stacked up over 50 evaluation episodes with identical initial conditions and an external push test ($\Delta v = +0.8\text{ m/s}$ applied to the cart at step 200)[cite: 5]:
@@ -50,27 +41,6 @@ Here is how both controllers stacked up over 50 evaluation episodes with identic
 * **Smoothness and Efficiency:** Around the upright point ($\theta_1 \approx 0, \theta_2 \approx 0$), LQR is near-optimal. It holds the links rock steady with virtually no chatter, consuming roughly 70% less energy than PPO[cite: 5].
 * **Where LQR Struggles:** LQR relies on small-angle assumptions ($\sin\theta \approx \theta$). Its 6% failure rate happens entirely during extreme randomized resets where the starting angle falls outside the linear region or forces the cart past the track boundaries ($\vert{}x\vert{} \ge 2.4\text{ m}$).
 * **PPO Behavior:** PPO handles larger non-linear recovery angles decently, but residual exploration noise leads to micro-vibrations and higher overall power consumption[cite: 5].
-
----
-
-## Engineering Notes
-
-### 1. State Formulation & Linearization
-The system state is defined as:
-$$\mathbf{x} = [x, \theta_1, \theta_2, \dot{x}, \dot{\theta}_1, \dot{\theta}_2]^T \in \mathbb{R}^6, \quad u \in [-1.0, 1.0]$$
-
-Continuous matrices $A_c$ and $B_c$ are obtained by setting the simulator integrator to semi-implicit Euler (`mjINT_EULER`) and evaluating centered finite differences directly on the physics data structure.
-
-### 2. Matching Environment Step Delays
-Because Gymnasium skips 5 simulation sub-steps per agent step ($\Delta t_{\text{env}} = \Delta t_{\text{sim}} \cdot \text{frame\_skip} = 0.01 \cdot 5 = 0.05\text{ s}$), discretizing over a single simulation sub-step would lead to severe phase lag. We reconstruct the step transition as:
-$$A_{\text{env}} = I + A_c \Delta t_{\text{env}}, \quad B_{\text{env}} = B_c \Delta t_{\text{env}}$$
-
-### 3. Damping Out Oscillations
-To stop the cart from bouncing aggressively against the actuator limits ($u = \pm 1.0$), angular velocity penalties dominate the state-cost matrix $Q$:
-$$Q = \text{diag}([5.0,\; 40.0,\; 60.0,\; 5.0,\; 40.0,\; 60.0]), \quad R = [[2.0]]$$
-
-The feedback gain $K$ is then computed via the Discrete Algebraic Riccati Equation (DARE):
-$$K = (R + B_{\text{env}}^T P B_{\text{env}})^{-1} B_{\text{env}}^T P A_{\text{env}}$$
 
 ---
 
