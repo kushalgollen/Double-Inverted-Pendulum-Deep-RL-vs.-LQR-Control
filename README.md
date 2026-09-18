@@ -9,9 +9,7 @@ This project explores how a well-calibrated linear quadratic regulator performs 
 ## Table of Contents
 
 - [Overview](#overview)
-- [Key Highlights](#key-highlights)
 - [Benchmark Results](#benchmark-results)
-- [Engineering Notes](#engineering-notes)
 - [Repository Structure](#repository-structure)
 - [Quickstart](#quickstart)
 - [Running the Scripts](#running-the-scripts)
