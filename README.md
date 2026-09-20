@@ -7,7 +7,7 @@ This project explores how a well-calibrated linear quadratic regulator performs 
 ---
 
 <p align="center">
-  <img src="benchmark/benchmark_result.png" alt="RL vs LQR Benchmark Terminal Output" width="700"/>
+  <img src="benchmark/benchmark_result.jpeg" alt="RL vs LQR Benchmark Terminal Output" width="700"/>
 </p>
 
 ---
