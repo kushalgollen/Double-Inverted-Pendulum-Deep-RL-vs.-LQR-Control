@@ -6,8 +6,8 @@ from stable_baselines3.common.env_util import make_vec_env
 from stable_baselines3.common.vec_env import SubprocVecEnv
 
 def main():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    model_path = os.path.join(script_dir, "models/ppo_double_pendulum_parallel")
+    script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    model_path = os.path.join(script_dir, "models", "ppo_double_pendulum_parallel")
 
     print("--- Initialing Parallel training with PPO ---")
 

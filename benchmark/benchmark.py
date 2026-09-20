@@ -3,7 +3,7 @@ import numpy as np
 import scipy.linalg
 from stable_baselines3 import PPO
 import mujoco
-
+import os
 
 def compute_lqr_gain():
     temp_env = gym.make("InvertedDoublePendulum-v5")
@@ -131,7 +131,9 @@ if __name__ == "__main__":
     print("--- Init. Benchmark RL vs LQR ---")
     
     # 1. loading the trained PPO model
-    model_ppo = PPO.load("models/ppo_double_pendulum_parallel")
+    script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    model_path = os.path.join(script_dir, "models", "ppo_double_pendulum_parallel")
+    model_ppo = PPO.load(model_path)
     
     # 2. Calculate LQR gains
     K_lqr = compute_lqr_gain()

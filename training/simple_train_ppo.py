@@ -9,8 +9,8 @@ def main():
     # fast with no graphics rendering, for training
     train_env = gym.make("InvertedDoublePendulum-v5")
 
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    model_path = os.path.join(script_dir, "models/ppo_double_pendulum")
+    script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    model_path = os.path.join(script_dir, "models", "ppo_double_pendulum_parallel")
 
     # defining the PPO model with MLP policy
     model = PPO(
