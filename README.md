@@ -32,19 +32,19 @@ While Deep Reinforcement Learning (DRL) can discover stabilization strategies pu
 
 ## Benchmark Results
 
-Here is how both controllers stacked up over 50 evaluation episodes with identical initial conditions and an external push test ($\Delta v = +0.8\text{ m/s}$ applied to the cart at step 200)[cite: 5]:
+Here is how both controllers stacked up over 50 evaluation episodes with identical initial conditions and an external push test ($\Delta v = +0.8\text{ m/s}$ applied to the cart at step 200):
 
 | Metric | Discrete LQR | Deep RL (PPO) | Advantage / Notes |
 | :--- | :---: | :---: | :--- |
-| **Survival Rate (Nominal)** | **94.0%**[cite: 5] | 86.0%[cite: 5] | **LQR (+8.0%)** |
-| **Survival Rate (0.8 m/s Push)** | **94.0%**[cite: 5] | 86.0%[cite: 5] | **LQR (+8.0%)** |
-| **Mean ISE (Tracking Error $\downarrow$)** | **0.0143** / **0.0163**[cite: 5] | 0.0560 / 0.0572[cite: 5] | **LQR (~3.9x cleaner)** |
-| **Mean Energy ($u^2$ Effort $\downarrow$)** | **0.0138** / **0.0138**[cite: 5] | 0.0488 / 0.0492[cite: 5] | **LQR (~3.5x more efficient)** |
+| **Survival Rate (Nominal)** | **94.0%** | 86.0% | **LQR (+8.0%)** |
+| **Survival Rate (0.8 m/s Push)** | **94.0%** | 86.0% | **LQR (+8.0%)** |
+| **Mean ISE (Tracking Error $\downarrow$)** | **0.0143** / **0.0163** | 0.0560 / 0.0572 | **LQR (~3.9x cleaner)** |
+| **Mean Energy ($u^2$ Effort $\downarrow$)** | **0.0138** / **0.0138** | 0.0488 / 0.0492 | **LQR (~3.5x more efficient)** |
 
 ### Practical Takeaways
-* **Smoothness and Efficiency:** Around the upright point ($\theta_1 \approx 0, \theta_2 \approx 0$), LQR is near-optimal. It holds the links rock steady with virtually no chatter, consuming roughly 70% less energy than PPO[cite: 5].
+* **Smoothness and Efficiency:** Around the upright point ($\theta_1 \approx 0, \theta_2 \approx 0$), LQR is near-optimal. It holds the links rock steady with virtually no chatter, consuming roughly 70% less energy than PPO.
 * **Where LQR Struggles:** LQR relies on small-angle assumptions ($\sin\theta \approx \theta$). Its 6% failure rate happens entirely during extreme randomized resets where the starting angle falls outside the linear region or forces the cart past the track boundaries ($\vert{}x\vert{} \ge 2.4\text{ m}$).
-* **PPO Behavior:** PPO handles larger non-linear recovery angles decently, but residual exploration noise leads to micro-vibrations and higher overall power consumption[cite: 5].
+* **PPO Behavior:** PPO handles larger non-linear recovery angles decently, but residual exploration noise leads to micro-vibrations and higher overall power consumption.
 
 ---
 
@@ -68,7 +68,6 @@ Here is how both controllers stacked up over 50 evaluation episodes with identic
 ├── requirements.txt                      # Exact Python package dependencies (Gymnasium, MuJoCo, SB3, SciPy)
 └── README.md                             # Project overview, mathematical formulation, and benchmark documentation
 ```
-[cite: 2, 3]
 
 ---
 
@@ -101,19 +100,19 @@ pip install -r requirements.txt
 
 ## Running the Scripts
 
-* **Run the complete benchmark (50 episodes, nominal + disturbance test):**[cite: 6]
+* **Run the complete benchmark (50 episodes, nominal + disturbance test):**
   ```bash
   python benchmark.py
   ```
-* **Watch the controllers balance in real-time:**[cite: 6]
+* **Watch the controllers balance in real-time:**
   ```bash
   python visualize.py
   ```
-* **Train PPO from scratch using parallel environments:**[cite: 6]
+* **Train PPO from scratch using parallel environments:**
   ```bash
   python parallel_train_ppo.py
   ```
-* **Quick simulation check:**[cite: 6]
+* **Quick simulation check:**
   ```bash
   python simple_sim.py
   ```
