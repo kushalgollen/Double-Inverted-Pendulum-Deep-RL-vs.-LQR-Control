@@ -6,6 +6,12 @@ This project explores how a well-calibrated linear quadratic regulator performs 
 
 ---
 
+<p align="center">
+  <img src="benchmark/benchmark_result.png" alt="RL vs LQR Benchmark Terminal Output" width="700"/>
+</p>
+
+---
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -44,20 +50,25 @@ Here is how both controllers stacked up over 50 evaluation episodes with identic
 
 ## Repository Structure
 
-```text
-├── models/
-│   ├── ppo_double_pendulum.zip           # Model trained on single environment
-│   └── ppo_double_pendulum_parallel.zip  # Model trained with vectorized sub-processes
-├── .gitignore                            # Standard Python/VS Code ignores
-├── benchmark.py                          # 50-episode comparative test suite (RL vs LQR)
-├── installation.txt                      # Detailed environment setup guide
-├── parallel_train_ppo.py                 # Multi-core PPO training script
-├── requirements.txt                      # Project dependencies
-├── simple_sim.py                         # Minimal MuJoCo interaction sandbox
-├── simple_train_ppo.py                   # Baseline single-process PPO training script
-└── visualize.py                          # Real-time visual comparison with camera tracking
 ```
-[cite: 6, 7]
+├── benchmark/
+│   └── benchmark.py                      # 50-episode comparative test suite (RL vs LQR) under nominal and perturbed conditions
+│   └── benchmark_results.png             # Visual snapshot of the terminal benchmark output
+├── models/
+│   ├── ppo_double_pendulum.zip           # Saved weights from single-process PPO training
+│   └── ppo_double_pendulum_parallel.zip  # Saved weights from vectorized multi-core PPO training
+├── sim_vis/
+│   ├── simple_sim.py                     # Minimal sandbox to run and test MuJoCo physical dynamics
+│   └── visualize.py                      # Real-time visual comparison with automated camera tracking
+├── training/
+│   ├── parallel_train_ppo.py             # Multi-environment parallel training pipeline using SubprocVecEnv
+│   └── simple_train_ppo.py               # Baseline single-process PPO training script
+├── .gitignore                            # Rules for excluding virtual environments, caches, and local IDE files
+├── installation.txt                      # Step-by-step system requirements and environment setup guide
+├── requirements.txt                      # Exact Python package dependencies (Gymnasium, MuJoCo, SB3, SciPy)
+└── README.md                             # Project overview, mathematical formulation, and benchmark documentation
+```
+[cite: 2, 3]
 
 ---
 
